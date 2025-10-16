@@ -54,26 +54,22 @@ mat* matrix_read(char* filename)
 mat* matrix_multiply(mat* A, mat*B)
 {
 	//fill this function to return a new matrix AB, the product of A and B. Return NULL if the product does not exist.
-	if ((A -> m == B -> n))
+	if (A->m != B->n) return NULL;
+	mat* matrix = create_matrix(A -> n, B -> m);
+	for (int r = 0; r < A -> n; r++)
 	{
-		mat* matrix = create_matrix(A -> n, B -> m);
-		for (int r = 0; r < A -> n; r++)
+		for (int c = 0; c < B -> m; c++)
 		{
-			for (int c = 0; c < B -> m; c++)
+			double dot = 0;
+			for (int ac = 0; ac < A -> m; ac++)
 			{
-				double dot = 0;
-				for (int ac = 0; ac < A -> m; ac++)
-				{
-					dot += A -> mat[r][ac] * B -> mat[ac][c];
-				}
-				matrix -> mat[r][c] = dot;
+				dot += A -> mat[r][ac] * B -> mat[ac][c];
 			}
+			matrix -> mat[r][c] = dot;
 		}
-
-		return matrix;
 	}
 
-	return NULL;
+	return matrix;
 }
 
 mat* matrix_add(mat* A, mat* B)
@@ -99,13 +95,13 @@ mat* matrix_add(mat* A, mat* B)
 void matrix_free(mat* A)
 {
 	//fill in this funciton to free the matrix A.
-	for (int i = 0; i < A -> n; i++)
+	if (A == NULL) return;
+    for (int i = 0; i < A->n; i++) 
 	{
-		free(A -> mat[i]);
-	}
-
-	free(A -> mat);
-	free(A);
+        free(A -> mat[i]);
+    }
+    free(A -> mat);
+    free(A);
 }
 
 int matrix_write(char* filename, mat* A)
@@ -128,15 +124,16 @@ int matrix_write(char* filename, mat* A)
 // fill this function to modify A into cA, that is, to multiply each entry of A by c.
 mat* matrix_scale(double c, mat* A)
 {
+	mat* matrix; 
 	for (int r = 0; r < A -> n; r++)
 		{
 			for (int col = 0; col < A -> m; col++)
 			{
-				A -> mat[r][col] *= c;
+				matrix -> mat[r][col] = c * A -> mat[r][col];
 			}
 		}
 
-	return A;
+	return matrix;
 }
 
 
