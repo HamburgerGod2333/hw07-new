@@ -96,7 +96,7 @@ void matrix_free(mat* A)
 {
 	//fill in this funciton to free the matrix A.
 	if (A == NULL) return;
-    for (int i = 0; i < A->n; i++) 
+    for (int i = 0; i < A -> n; i++) 
 	{
         free(A -> mat[i]);
     }
@@ -124,7 +124,7 @@ int matrix_write(char* filename, mat* A)
 // fill this function to modify A into cA, that is, to multiply each entry of A by c.
 mat* matrix_scale(double c, mat* A)
 {
-	mat* matrix; 
+	mat* matrix = create_matrix(A -> n, A -> m); 
 	for (int r = 0; r < A -> n; r++)
 		{
 			for (int col = 0; col < A -> m; col++)
