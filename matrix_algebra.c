@@ -107,6 +107,7 @@ void matrix_free(mat* A)
 int matrix_write(char* filename, mat* A)
 {
 	// write A to the binary file filename. If this fails for whatever reason, return 0.
+	if (A == NULL) {return 0;}
 	FILE * fptr = fopen(filename, "wb");
 	if (fptr == NULL) {return 0;}
 	fwrite(&A -> n, sizeof(int), 1, fptr);
